@@ -32,7 +32,10 @@ def getSIFTFeaturesFullPhoto():
 def getSIFTFeatures(pid):
     if not os.path.exists('data_features/' + str(pid) + ".jpg.npy"):
         img = cv2.imread('data/' + str(pid) + ".jpg", 0)
-        kp, des = sift.detectAndCompute(img, None)
+        try:
+            kp, des = sift.detectAndCompute(img, None)
+        except cv2.error:
+            print("error image id {}".format(pid))
 
         PreviewUtil.saveImageFeaturePreview(str(pid) + ".jpg", kp)
 
